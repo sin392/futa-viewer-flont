@@ -1,0 +1,17 @@
+.header {
+  background-color: #464646;
+  width: 100%;
+  height: 150px;
+  top: 0px;
+  position: fixed;
+}
+
+.logo {
+  width: fit-content;
+  color: white;
+  /* border: 1px dotted; */
+  line-height: 150px;
+  margin-left: 110px;
+  font-size: 70px;
+  font-weight: lighter;
+}

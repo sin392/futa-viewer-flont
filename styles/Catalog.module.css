@@ -1,0 +1,31 @@
+.container {
+}
+
+.searchBoxContainer {
+  top: 150px;
+  position: fixed;
+  width: 100%;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: lightgray;
+}
+
+.previews {
+  margin-top: 20px;
+  width: 100%;
+  top: 250px;
+  position: absolute;
+  padding: 0 100px 70px 100px;
+  /* overflow: scroll !important; */
+  /* width: 100%; */
+  width: fit-content;
+  /* top: 250px; */
+  /* position: absolute; */
+  z-index: -1;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  /* align-content: space-between; */
+}
