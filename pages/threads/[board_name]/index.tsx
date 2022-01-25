@@ -4,6 +4,7 @@ import { useRouter } from 'next/router'
 import Layout from 'components/layout'
 import SearchBox from 'components/search-box'
 import ThreadPreview from 'components/thread-preview'
+import BoardDrawer from 'components/board-drawer'
 import styles from 'styles/Catalog.module.css'
 
 interface Props {
@@ -27,6 +28,7 @@ const Catalog: NextPage<Props> = (props: Props) => {
             return <ThreadPreview key={index} {...item} />
           })}
         </div>
+        <BoardDrawer />
       </div>
     </Layout>
   )
