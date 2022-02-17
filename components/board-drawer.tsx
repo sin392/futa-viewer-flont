@@ -1,4 +1,5 @@
 import { FC, useState } from 'react'
+import Link from 'next/link'
 import List from '@mui/material/List'
 import ListItem from '@mui/material/ListItem'
 import ListItemIcon from '@mui/material/ListItemIcon'
@@ -38,7 +39,7 @@ const BoardDrawer: FC = () => {
               {['img', 'may', 'dec'].map((text, index) => (
                 <ListItem button key={text}>
                   <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                  <ListItemText primary={text} />
+                  <ListItemText primary={<Link href={`/threads/${text}`}>{text}</Link>} />
                 </ListItem>
               ))}
             </List>

@@ -1,5 +1,5 @@
-import type { NextPage, GetServerSideProps, GetServerSidePropsContext } from 'next'
-import Image from 'next/image'
+import type { NextPage, GetServerSideProps } from 'next'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 import Layout from 'components/layout'
 import SearchBox from 'components/search-box'
@@ -25,7 +25,14 @@ const Catalog: NextPage<Props> = (props: Props) => {
         </div>
         <div className={styles.previews}>
           {items.map((item: any, index) => {
-            return <ThreadPreview key={index} {...item} />
+            return (
+              // Link does not work ?
+              <Link key={index} href={`/threads/${board_name}/${item.id}`}>
+                <div>
+                  <ThreadPreview {...item} />
+                </div>
+              </Link>
+            )
           })}
         </div>
         <BoardDrawer />

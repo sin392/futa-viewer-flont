@@ -1,14 +1,22 @@
-import { FC, useState } from 'react'
+import { FC } from 'react'
 import { TextField } from '@mui/material'
+import { styled } from '@mui/material/styles'
 import InputAdornment from '@mui/material/InputAdornment'
 import SearchIcon from '@mui/icons-material/Search'
 
 import styles from 'styles/SearchBox.module.css'
 
+// 基本はCSS Modulesでやりたいので最低限のスタイル設定だけ...
+const StyledTextField = styled(TextField)({
+  '& .MuiOutlinedInput-notchedOutline': {
+    border: 'none !important',
+  },
+})
+
 const SearchBox: FC = () => {
   return (
     <div className={styles.container}>
-      <TextField
+      <StyledTextField
         placeholder='キーワードで検索'
         InputProps={{
           startAdornment: (
@@ -17,7 +25,7 @@ const SearchBox: FC = () => {
             </InputAdornment>
           ),
         }}
-        className={styles.textField}
+        // className={styles.textField}
       />
     </div>
   )

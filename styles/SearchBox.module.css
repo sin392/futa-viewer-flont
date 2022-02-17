@@ -1,8 +1,15 @@
 .container {
-  /* background-color: white; */
+  background-color: white;
+  overflow: 'hidden';
+  border-radius: 4px;
 }
 
-.textField {
-  /* width: 60%; */
-  /* border-radius: 50%; */
-}
+/* NOT WORK: コンポーネント側で定義されているclassNameを参照してMUIのスタイルを上書きしたい */
+/* ref: https://stackoverflow.com/questions/68530854/issue-with-global-css-module-selectors-not-being-pure-in-nextjs */
+/* .textField :global { */
+/* .MuiOutlinedInput-root {
+    border-radius: 0px !important;
+    overflow: hidden;
+    background-color: white;
+  } */
+/* } */
