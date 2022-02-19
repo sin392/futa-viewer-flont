@@ -115,7 +115,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx: any) => {
   const res = await (await fetch(`http://localhost:15555/v1/threads/${board_name}?${query}`)).json()
   // const res = await (await fetch('http://localhost:15555/v1/threads/dec')).json()
   return {
-    props: { items: res },
+    props: res,
   }
 }
 
