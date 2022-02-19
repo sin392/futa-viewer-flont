@@ -6,6 +6,10 @@ import SearchIcon from '@mui/icons-material/Search'
 
 import styles from 'styles/SearchBox.module.css'
 
+interface Props {
+  inputRef: any
+}
+
 // 基本はCSS Modulesでやりたいので最低限のスタイル設定だけ...
 const StyledTextField = styled(TextField)({
   '& .MuiOutlinedInput-notchedOutline': {
@@ -13,7 +17,7 @@ const StyledTextField = styled(TextField)({
   },
 })
 
-const SearchBox: FC = () => {
+const SearchBox: FC<Props> = ({ inputRef }) => {
   return (
     <div className={styles.container}>
       <StyledTextField
@@ -25,6 +29,7 @@ const SearchBox: FC = () => {
             </InputAdornment>
           ),
         }}
+        inputRef={inputRef}
         // className={styles.textField}
       />
     </div>

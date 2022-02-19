@@ -1,8 +1,19 @@
 .container {
-  /* width: 100%; */
-  /* height: 100vh !important; */
+  width: 100%;
+  min-height: 100%;
+  height: 100%;
+  background-color: white;
 }
 
 .main {
-  /* overflow: scroll !important; */
+  width: 100%;
+  height: 100% !important;
+  border: 1px solid blue;
+  padding-top: 150px;
+  padding-bottom: 50px;
+  overflow-y: scroll;
+}
+
+.main::-webkit-scrollbar {
+  display: none;
 }

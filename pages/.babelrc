@@ -1,0 +1,6 @@
+{
+  // material-uiとSSRを併用する場合に必要
+  //ref: https://qiita.com/hiropanda/items/db4e10d826e3ad9a9b33
+  "presets": ["next/babel"],
+  "plugins": [["styled-components", { "ssr": true, "displayName": true, "preprocess": false }]]
+}

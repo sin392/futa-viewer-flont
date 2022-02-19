@@ -1,0 +1,27 @@
+.commentContainer {
+  border: 1px solid whitesmoke;
+  padding: 0px 20px;
+}
+
+.commentHeader {
+  padding-top: 10px;
+  color: lightgray;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.comment {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.quoted {
+  color: green;
+  font-weight: bold;
+}
+
+.link {
+  color: #0645ad;
+}

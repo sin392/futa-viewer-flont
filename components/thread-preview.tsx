@@ -1,4 +1,5 @@
 import { FC } from 'react'
+import { LazyLoadImage } from 'react-lazy-load-image-component'
 import styles from 'styles/ThreadPreview.module.css'
 
 interface Props {
@@ -24,7 +25,7 @@ const ThreadPreview: FC<Props> = (props: Props) => {
   return (
     <div className={styles.container}>
       <div className={styles.imgContainer}>
-        <img {...img} />
+        <LazyLoadImage {...img} />
       </div>
       <div className={styles.title}>{title}</div>
       <div className={styles.resNum}>{resNum}</div>
