@@ -3,17 +3,14 @@
   min-height: 100%;
   height: 100%;
   background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .main {
   width: 100%;
   height: 100% !important;
   border: 1px solid blue;
-  padding-top: 150px;
-  padding-bottom: 50px;
   overflow-y: scroll;
-}
-
-.main::-webkit-scrollbar {
-  display: none;
 }
