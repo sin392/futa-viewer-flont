@@ -28,7 +28,15 @@
 
 .topicContainer {
   display: flex;
+  width: 100%;
 }
+
+/* .imageContainer {
+  width: 20%;
+  height: auto;
+  position: relative;
+  border: 1px solid red;
+} */
 
 .image {
   margin: 20px 20px 20px 0px;

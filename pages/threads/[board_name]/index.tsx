@@ -10,7 +10,6 @@ import React, { useEffect, useRef, useState } from 'react'
 import MenuItem from '@mui/material/MenuItem'
 import FormControl from '@mui/material/FormControl'
 import Select, { SelectChangeEvent } from '@mui/material/Select'
-import { styled } from '@mui/material/styles'
 
 interface Props {
   items: object[]
@@ -19,13 +18,6 @@ interface Props {
     message: string
   }
 }
-
-// TODO: セレクタをちゃんと指定しないとエラー
-const StyledFormControl = styled(FormControl)({
-  '& MuiOutlinedInput-root': {
-    border: 'none !important',
-  },
-})
 
 // TODO: replace any
 const Catalog: NextPage<Props> = (props: Props) => {
@@ -80,7 +72,16 @@ const Catalog: NextPage<Props> = (props: Props) => {
           <div onChange={searchHandler} className={styles.searchBoxContainer}>
             <SearchBox inputRef={textRef} />
           </div>
-          <StyledFormControl sx={{ m: 1, minWidth: 120 }} className={styles.select}>
+          <FormControl
+            sx={{
+              m: 1,
+              minWidth: 120,
+              '& MuiOutlinedInput-root': {
+                border: 'none !important',
+              },
+            }}
+            className={styles.select}
+          >
             <Select defaultValue={'0'} value={(sort as string) || '0'} onChange={selectHandler}>
               <MenuItem value='0'>カタログ</MenuItem>
               <MenuItem value='1'>新順</MenuItem>
@@ -90,28 +91,30 @@ const Catalog: NextPage<Props> = (props: Props) => {
               <MenuItem value='4'>少順</MenuItem>
               <MenuItem value='8'>そ順</MenuItem>
             </Select>
-          </StyledFormControl>
+          </FormControl>
         </div>
         {!error ? (
-          <div className={styles.previews}>
-            {filteredItems.map((item: any, index) => {
-              if (item.img) {
-                item.img.src = item.img.src.replace('cat', 'thumb')
-              }
-              const path = `/threads/${board_name}/${item.id}`
-              return (
-                <Link key={index} href={path}>
-                  <a href={path}>
-                    <ThreadPreview {...item} />
-                  </a>
-                </Link>
-              )
-            })}
-          </div>
+          <>
+            <div className={styles.previews}>
+              {filteredItems.map((item: any, index) => {
+                if (item.img) {
+                  item.img.src = item.img.src.replace('cat', 'thumb')
+                }
+                const path = `/threads/${board_name}/${item.id}`
+                return (
+                  <Link key={index} href={path}>
+                    <a href={path}>
+                      <ThreadPreview {...item} />
+                    </a>
+                  </Link>
+                )
+              })}
+            </div>
+            <BoardDrawer />
+          </>
         ) : (
           <div className={styles.error}>{error!.message}</div>
         )}
-        <BoardDrawer />
       </div>
     </Layout>
   )

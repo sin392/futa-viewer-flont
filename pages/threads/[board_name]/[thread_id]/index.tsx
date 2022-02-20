@@ -3,8 +3,9 @@ import { useRouter } from 'next/router'
 import Layout from 'components/layout'
 import styles from 'styles/Thread.module.css'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
-import React from 'react'
+// import React from 'react'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
+// import Image from 'next/image'
 import Comment from 'components/comment'
 
 interface Props {
@@ -16,7 +17,7 @@ interface Props {
     sod: string
     body: string
     no: string
-    srcs: string[]
+    img: any
   }[]
   error?: {
     status: number
@@ -43,9 +44,27 @@ const Thread: NextPage<Props> = (props: Props) => {
         {!error ? (
           <>
             <div className={styles.topicContainer}>
-              {items[0].srcs && (
-                <a href={items[0].srcs[0]} target='_blank' rel='noopener noreferrer'>
-                  <LazyLoadImage src={items[0].srcs[1]} className={styles.image} />
+              {items[0].img && (
+                <a
+                  href={items[0].img.src.replace('thumb', 'src')}
+                  target='_blank'
+                  rel='noopener noreferrer'
+                >
+                  <LazyLoadImage
+                    src={items[0].img.src}
+                    className={styles.image}
+                    width={items[0].img.width}
+                    height={items[0].img.height}
+                  />
+                  {/* <div className={styles.image}>
+                    <Image
+                      src={items[0].img.src}
+                      // layout='fill'
+                      // objectFit='contain'
+                      width={items[0].img.width}
+                      height={items[0].img.height}
+                    />
+                  </div> */}
                 </a>
               )}
               <div className={styles.title}>
