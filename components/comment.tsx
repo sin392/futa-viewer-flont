@@ -7,14 +7,13 @@ interface Props {
   name: string
   date: string
   no: string
+  sod: string
   body: string
 }
 
-// const URLPattern = new RegExp(
-//   '(http://|https://){1}[\\w\\-/:\\#\\?\\=\\&\\;\\%\\~\\+\\.]+(?!.*\\.).',
-// )
-
-const URLPattern = new RegExp('https://.*')
+const URLPattern = new RegExp(
+  '(http://|https://){1}[\\w\\-/:\\#\\?\\=\\&\\;\\%\\~\\+\\.]+(?!.*\\.).',
+)
 
 // 改行ごとにspanで囲む, 引用行ならクラスを付加
 // linkは正規表現で判定して, aタグで囲む
@@ -47,16 +46,21 @@ const parseText = (text: string): JSX.Element => {
 }
 
 const Comment: FC<Props> = (props) => {
-  const { order, title, name, date, no, body } = props
+  const { order, title, name, date, no, sod, body } = props
   return (
     <div className={styles.commentContainer}>
       <div className={styles.commentHeader}>
         <span>{order}</span>
-        <span>{title}</span>
-        <span>Name</span>
-        <span>{name}</span>
+        {title && <span>{title}</span>}
+        {name && (
+          <>
+            <span>Name</span>
+            <span>{name}</span>
+          </>
+        )}
         <span>{date}</span>
         <span>{no}</span>
+        {sod != null && <span>{sod}</span>}
       </div>
       <p className={styles.comment}>{parseText(body)}</p>
     </div>

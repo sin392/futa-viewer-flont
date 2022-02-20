@@ -14,6 +14,10 @@ import { styled } from '@mui/material/styles'
 
 interface Props {
   items: object[]
+  error?: {
+    status: number
+    message: string
+  }
 }
 
 // TODO: セレクタをちゃんと指定しないとエラー
@@ -30,7 +34,7 @@ const Catalog: NextPage<Props> = (props: Props) => {
   const router = useRouter()
   // TODO: レスポンスの変数名をキャメルケースにしたい
   const { board_name, sort } = router.query
-  const { items } = props
+  const { items, error } = props
   const [filteredItems, setFilteredItems] = useState<object[]>([])
   // const [loading setLoading] = useState<boolean>(false)
   // TODO: コメントまで検索対照に含める
@@ -88,21 +92,25 @@ const Catalog: NextPage<Props> = (props: Props) => {
             </Select>
           </StyledFormControl>
         </div>
-        <div className={styles.previews}>
-          {filteredItems.map((item: any, index) => {
-            if (item.img) {
-              item.img.src = item.img.src.replace('cat', 'thumb')
-            }
-            const path = `/threads/${board_name}/${item.id}`
-            return (
-              <Link key={index} href={path}>
-                <a href={path}>
-                  <ThreadPreview {...item} />
-                </a>
-              </Link>
-            )
-          })}
-        </div>
+        {!error ? (
+          <div className={styles.previews}>
+            {filteredItems.map((item: any, index) => {
+              if (item.img) {
+                item.img.src = item.img.src.replace('cat', 'thumb')
+              }
+              const path = `/threads/${board_name}/${item.id}`
+              return (
+                <Link key={index} href={path}>
+                  <a href={path}>
+                    <ThreadPreview {...item} />
+                  </a>
+                </Link>
+              )
+            })}
+          </div>
+        ) : (
+          <div className={styles.error}>{error!.message}</div>
+        )}
         <BoardDrawer />
       </div>
     </Layout>
@@ -114,10 +122,13 @@ export const getServerSideProps: GetServerSideProps = async (ctx: any) => {
   const board_name = ctx.params.board_name
   const sort = ctx.query.sort != null ? ctx.query.sort : '0'
   const query = new URLSearchParams({ sort: sort })
-  const res = await (await fetch(`http://localhost:15555/v1/threads/${board_name}?${query}`)).json()
-  // const res = await (await fetch('http://localhost:15555/v1/threads/dec')).json()
+  const res = await fetch(`http://localhost:15555/v1/threads/${board_name}?${query}`)
+  const errorCode = res.ok ? false : res.status
+  const errorMessage = `Error: ${errorCode}`
+  const json = await res.json()
+  const props = !errorCode ? json : { ...json, error: { code: errorCode, message: errorMessage } }
   return {
-    props: res,
+    props: props,
   }
 }
 

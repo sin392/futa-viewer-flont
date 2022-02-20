@@ -46,3 +46,12 @@
   grid-gap: 1rem;
   padding: 20px 0;
 }
+
+.error {
+  /* background-color: #0645ad !important; */
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: xx-large;
+}
