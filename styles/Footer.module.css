@@ -2,7 +2,7 @@
   width: 100%;
   line-height: 50px;
   background-color: var(--main-color);
-  color: var(--main-color);
+  color: var(--base-color);
   text-align: center;
   /* position: fixed; */
   /* bottom: 0; */
