@@ -36,11 +36,7 @@ const Thread: NextPage<Props> = (props: Props) => {
           <>
             <div className={styles.topicContainer}>
               {items[0].img && (
-                <a
-                  href={items[0].img.src.replace('thumb', 'src')}
-                  target='_blank'
-                  rel='noopener noreferrer'
-                >
+                <a href={items[0].href} target='_blank' rel='noopener noreferrer'>
                   <LazyLoadImage
                     src={items[0].img.src}
                     className={styles.image}

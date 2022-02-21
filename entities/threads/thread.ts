@@ -8,6 +8,7 @@ export interface CommentSchema {
   no: string
   sod?: string
   body: string
+  href?: string
   img?: ImageSchema
 }
 
