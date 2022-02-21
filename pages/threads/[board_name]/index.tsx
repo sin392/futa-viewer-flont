@@ -10,23 +10,27 @@ import MenuItem from '@mui/material/MenuItem'
 import FormControl from '@mui/material/FormControl'
 import Select, { SelectChangeEvent } from '@mui/material/Select'
 import { ThreadPreviewSchema } from 'entities/threads/catalog'
+import { swrFetch } from 'utils/utils'
 
 interface Props {
-  items: ThreadPreviewSchema[]
-  error?: {
-    status: number
-    message: string
-  }
+  board_name: string
+  // sort: string
 }
 
 // TODO: replace any
-const Catalog: NextPage<Props> = (props: Props) => {
+const Catalog: NextPage<Props> = ({ board_name }) => {
   // ref: https://qiita.com/FumioNonaka/items/feb2fd5b362f2558acfa
   const textRef = useRef<HTMLInputElement>(null!)
   const router = useRouter()
   // TODO: レスポンスの変数名をキャメルケースにしたい
-  const { board_name, sort } = router.query
-  const { items, error } = props
+  // const { board_name, sort } = router.query
+  const sort = router.query.sort
+
+  // const { items, error } = props
+  const { data, error, isLoading } = swrFetch(
+    `http://localhost:15555/v1/threads/${board_name}?sort=${sort}`,
+  )
+  const items: ThreadPreviewSchema[] = data ? (data as any).items : []
   const [filteredItems, setFilteredItems] = useState<ThreadPreviewSchema[]>([])
   // const [loading setLoading] = useState<boolean>(false)
   // TODO: コメントまで検索対照に含める
@@ -117,18 +121,13 @@ const Catalog: NextPage<Props> = (props: Props) => {
   )
 }
 
-// TODO: replace any
+// why this works?
+// ref: https://stackoverflow.com/questions/61891845/is-there-a-way-to-keep-router-query-on-page-refresh-in-nextjs
 export const getServerSideProps: GetServerSideProps = async (ctx: any) => {
   const board_name = ctx.params.board_name
-  const sort = ctx.query.sort != null ? ctx.query.sort : '0'
-  const query = new URLSearchParams({ sort: sort })
-  const res = await fetch(`http://localhost:15555/v1/threads/${board_name}?${query}`)
-  const errorCode = res.ok ? false : res.status
-  const errorMessage = `Error: ${errorCode}`
-  const json = await res.json()
-  const props = !errorCode ? json : { ...json, error: { code: errorCode, message: errorMessage } }
+  // const sort = ctx.query.sort != null ? ctx.query.sort : '0'
   return {
-    props: props,
+    props: { board_name },
   }
 }
 

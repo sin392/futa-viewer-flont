@@ -13,17 +13,15 @@ import ScrollButton from 'components/scroll-button'
 import { swrFetch } from 'utils/utils'
 
 interface Props {
-  items: CommentSchema[]
-  error?: {
-    status: number
-    message: string
-  }
+  board_name: string
+  thread_id: string
 }
 
 // TODO: replace any
-const Thread: NextPage<Props> = () => {
+const Thread: NextPage<Props> = ({ board_name, thread_id }) => {
   const router = useRouter()
-  const { board_name, thread_id } = router.query
+  // const { board_name, thread_id } = router.query
+  // const { board_name, thread_id } = router.query
   // ref: https://qiita.com/mktu/items/1d1c0259ed16e9a4155a
   // HACK: 子に渡すのがrefだけだと再描画がはしらず, stateだけだとscrollToが参照できない
   const [scroll, setScroll] = useState<number>(0)
@@ -103,20 +101,12 @@ const Thread: NextPage<Props> = () => {
   )
 }
 
-// TODO: replace any
-// export const getServerSideProps: GetServerSideProps = async (ctx: any) => {
-//   const board_name = ctx.params.board_name
-//   const thread_id = ctx.params.thread_id
-
-//   const res = await fetch(`http://localhost:15555/v1/threads/${board_name}/${thread_id}`)
-//   const errorCode = res.ok ? false : res.status
-//   const errorMessage = `Error: ${errorCode}`
-//   const json = await res.json()
-//   const props = !errorCode ? json : { ...json, error: { code: errorCode, message: errorMessage } }
-
-//   return {
-//     props: props,
-//   }
-// }
+export const getServerSideProps: GetServerSideProps = async (ctx: any) => {
+  const board_name = ctx.params.board_name
+  const thread_id = ctx.params.thread_id
+  return {
+    props: { board_name, thread_id },
+  }
+}
 
 export default Thread
