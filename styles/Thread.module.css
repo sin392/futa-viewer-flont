@@ -50,18 +50,26 @@
 }
 
 .rtbContainer {
-  /* background-color: aqua; */
   position: fixed;
-  bottom: 60px;
+  margin-top: 20px;
+  /* bottom: 60px; */
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .rtb {
   width: 70px;
   height: 70px;
-  background-color: var(--accent-color);
   border-radius: 50%;
   color: var(--base-color);
+  background-color: var(--accent-color);
   /* user-select: 'none' !important; */
+}
+
+.scrollIcon {
+  height: fit-content;
+  width: fit-content;
 }
 
 .topicContainer {
