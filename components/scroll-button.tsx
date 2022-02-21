@@ -20,7 +20,6 @@ const scrollButton: FC<Props> = (props) => {
   const type = props.type != null ? props.type : 'up'
   const threshTop = props.threshTop != null ? props.threshTop : 1
   const bottom = anchor != null ? anchor.scrollHeight - anchor.clientHeight || LARGE_NUM : LARGE_NUM
-  console.log(scroll, bottom)
 
   const scrollTo = () => {
     anchor?.scrollTo({
