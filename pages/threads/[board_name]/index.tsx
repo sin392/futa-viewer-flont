@@ -59,7 +59,6 @@ const Catalog: NextPage<Props> = (props: Props) => {
     }
   })
 
-  // TODO: 検索が維持されるようにしたい
   useEffect(() => {
     setFilteredItems(items)
   }, [items])
