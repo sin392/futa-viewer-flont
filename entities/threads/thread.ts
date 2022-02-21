@@ -6,7 +6,7 @@ export interface CommentSchema {
   name: string
   date: string
   no: string
-  sod?: string
+  sod?: number
   body: string
   href?: string
   img?: ImageSchema

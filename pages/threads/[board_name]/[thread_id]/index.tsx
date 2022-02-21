@@ -1,12 +1,13 @@
+import { useRef, useState, UIEvent } from 'react'
 import type { NextPage, GetServerSideProps } from 'next'
 import { useRouter } from 'next/router'
 import styles from 'styles/Thread.module.css'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
-// import React from 'react'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 // import Image from 'next/image'
 import Comment from 'components/comment'
 import { CommentSchema } from 'entities/threads/thread'
+import ReturnTopButton from 'components/return-top-button'
 
 interface Props {
   items: CommentSchema[]
@@ -19,19 +20,30 @@ interface Props {
 // TODO: replace any
 const Thread: NextPage<Props> = (props: Props) => {
   const router = useRouter()
+  // ref: https://qiita.com/mktu/items/1d1c0259ed16e9a4155a
+  // HACK: 子に渡すのがrefだけだと再描画がはしらず, stateだけだとscrollToが参照できない
+  const [scroll, setScroll] = useState<number>(0)
+  const ref = useRef<HTMLDivElement>(null)
   const { items, error } = props
+
+  const scrollHandler = (e: UIEvent<HTMLDivElement>) => {
+    // setAnchor(e.currentTarget)
+    setScroll(e.currentTarget.scrollTop)
+  }
 
   const backHandler = (e: React.MouseEvent) => {
     router.back()
   }
 
   return (
-    <>
-      <div className={styles.backButtonContainer}>
-        <ArrowBackIcon className={styles.backButton} onClick={backHandler} />
+    <div className={styles.container} onScroll={scrollHandler} ref={ref}>
+      <div className={styles.leftContainer}>
+        <div className={styles.backButtonContainer}>
+          <ArrowBackIcon className={styles.backButton} onClick={backHandler} />
+        </div>
       </div>
 
-      <div className={styles.container}>
+      <div className={styles.centerContainer}>
         {!error ? (
           <>
             <div className={styles.topicContainer}>
@@ -69,7 +81,14 @@ const Thread: NextPage<Props> = (props: Props) => {
           <div className={styles.error}>{error!.message}</div>
         )}
       </div>
-    </>
+      <div className={styles.rightContainer}>
+        <div className={styles.rtbContainer}>
+          <ReturnTopButton className={styles.rtb} scroll={scroll} anchor={ref.current}>
+            トップ
+          </ReturnTopButton>
+        </div>
+      </div>
+    </div>
   )
 }
 

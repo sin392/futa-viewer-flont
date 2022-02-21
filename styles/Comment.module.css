@@ -17,11 +17,34 @@
   word-wrap: break-word;
 }
 
-.quoted {
+/* for line in container */
+.quotedLine {
   color: green;
   font-weight: bold;
 }
 
-.link {
+.deletedLine,
+.isolatedLine {
+  color: red;
+}
+
+.linkLine {
   color: #0645ad;
+}
+
+/* for container */
+.withQuote {
+}
+
+.deleted {
+}
+
+.isolated {
+}
+
+.withUrl {
+}
+
+.popular {
+  /* border: 1px solid red !important; */
 }
