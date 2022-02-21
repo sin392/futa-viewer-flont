@@ -1,6 +1,5 @@
 import type { NextPage, GetServerSideProps } from 'next'
 import { useRouter } from 'next/router'
-import Layout from 'components/layout'
 import styles from 'styles/Thread.module.css'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 // import React from 'react'
@@ -27,7 +26,7 @@ const Thread: NextPage<Props> = (props: Props) => {
   }
 
   return (
-    <Layout>
+    <>
       <div className={styles.backButtonContainer}>
         <ArrowBackIcon className={styles.backButton} onClick={backHandler} />
       </div>
@@ -74,7 +73,7 @@ const Thread: NextPage<Props> = (props: Props) => {
           <div className={styles.error}>{error!.message}</div>
         )}
       </div>
-    </Layout>
+    </>
   )
 }
 

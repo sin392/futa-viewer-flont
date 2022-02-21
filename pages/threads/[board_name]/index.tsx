@@ -1,7 +1,6 @@
 import type { NextPage, GetServerSideProps } from 'next'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import Layout from 'components/layout'
 import SearchBox from 'components/search-box'
 import ThreadPreview from 'components/thread-preview'
 import BoardDrawer from 'components/board-drawer'
@@ -66,58 +65,56 @@ const Catalog: NextPage<Props> = (props: Props) => {
   }, [items])
 
   return (
-    <Layout>
-      <div className={styles.container}>
-        <div className={styles.subHeader}>
-          <div className={styles.boardName}>{board_name}</div>
-          <div onChange={searchHandler} className={styles.searchBoxContainer}>
-            <SearchBox inputRef={textRef} />
-          </div>
-          <FormControl
-            sx={{
-              m: 1,
-              minWidth: 120,
-              '& MuiOutlinedInput-root': {
-                border: 'none !important',
-              },
-            }}
-            className={styles.select}
-          >
-            <Select defaultValue={'0'} value={(sort as string) || '0'} onChange={selectHandler}>
-              <MenuItem value='0'>カタログ</MenuItem>
-              <MenuItem value='1'>新順</MenuItem>
-              <MenuItem value='2'>古順</MenuItem>
-              <MenuItem value='3'>多順</MenuItem>
-              <MenuItem value='6'>勢順</MenuItem>
-              <MenuItem value='4'>少順</MenuItem>
-              <MenuItem value='8'>そ順</MenuItem>
-            </Select>
-          </FormControl>
+    <div className={styles.container}>
+      <div className={styles.subHeader}>
+        <div className={styles.boardName}>{board_name}</div>
+        <div onChange={searchHandler} className={styles.searchBoxContainer}>
+          <SearchBox inputRef={textRef} />
         </div>
-        {!error ? (
-          <>
-            <div className={styles.previews}>
-              {filteredItems.map((item, index) => {
-                if (item.img) {
-                  item.img.src = item.img.src.replace('cat', 'thumb')
-                }
-                const path = `/threads/${board_name}/${item.id}`
-                return (
-                  <Link key={index} href={path}>
-                    <a href={path}>
-                      <ThreadPreview {...item} />
-                    </a>
-                  </Link>
-                )
-              })}
-            </div>
-            <BoardDrawer />
-          </>
-        ) : (
-          <div className={styles.error}>{error!.message}</div>
-        )}
+        <FormControl
+          sx={{
+            m: 1,
+            minWidth: 120,
+            '& MuiOutlinedInput-root': {
+              border: 'none !important',
+            },
+          }}
+          className={styles.select}
+        >
+          <Select defaultValue={'0'} value={(sort as string) || '0'} onChange={selectHandler}>
+            <MenuItem value='0'>カタログ</MenuItem>
+            <MenuItem value='1'>新順</MenuItem>
+            <MenuItem value='2'>古順</MenuItem>
+            <MenuItem value='3'>多順</MenuItem>
+            <MenuItem value='6'>勢順</MenuItem>
+            <MenuItem value='4'>少順</MenuItem>
+            <MenuItem value='8'>そ順</MenuItem>
+          </Select>
+        </FormControl>
       </div>
-    </Layout>
+      {!error ? (
+        <>
+          <div className={styles.previews}>
+            {filteredItems.map((item, index) => {
+              if (item.img) {
+                item.img.src = item.img.src.replace('cat', 'thumb')
+              }
+              const path = `/threads/${board_name}/${item.id}`
+              return (
+                <Link key={index} href={path}>
+                  <a href={path}>
+                    <ThreadPreview {...item} />
+                  </a>
+                </Link>
+              )
+            })}
+          </div>
+          <BoardDrawer />
+        </>
+      ) : (
+        <div className={styles.error}>{error!.message}</div>
+      )}
+    </div>
   )
 }
 
