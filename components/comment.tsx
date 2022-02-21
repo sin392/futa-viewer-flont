@@ -1,15 +1,8 @@
+import { CommentSchema } from 'entities/threads/thread'
 import { FC } from 'react'
 import styles from 'styles/Comment.module.css'
 
-interface Props {
-  order: number
-  title: string
-  name: string
-  date: string
-  no: string
-  sod: string
-  body: string
-}
+interface Props extends CommentSchema {}
 
 const URLPattern = new RegExp(
   '(http://|https://){1}[\\w\\-/:\\#\\?\\=\\&\\;\\%\\~\\+\\.]+(?!.*\\.).',

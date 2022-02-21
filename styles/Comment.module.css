@@ -5,7 +5,7 @@
 
 .commentHeader {
   padding-top: 10px;
-  color: lightgray;
+  color: var(--accent-color);
   display: flex;
   align-items: center;
   gap: 0.5rem;

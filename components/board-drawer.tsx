@@ -14,15 +14,11 @@ const drawerWidth = 180
 const BoardDrawer: FC = () => {
   const [open, setOpen] = useState(false)
 
-  // const handleDrawerToggle = () => {
-  //   setOpen(!open)
-  // }
-
   const toggleDrawer = (open: boolean) => (e: any) => {
     if (e && e.type === 'keydown' && (e.key === 'Tab' || e.key === 'Shift')) {
       return
     }
-    console.log(open)
+
     setOpen(open)
   }
 
@@ -37,29 +33,26 @@ const BoardDrawer: FC = () => {
             width: drawerWidth,
             boxSizing: 'border-box',
           },
-          '& .PrivateSwipeableArea-root': {
-            zIndex: 0,
-          },
+          // '& .PrivateSwipeArea-root': {
+          //   zIndex: '0 !important',
+          // },
         }}
+        variant='temporary'
         anchor='left'
         open={open}
         onClose={toggleDrawer(false)}
         onOpen={toggleDrawer(true)}
       >
-        <div className={styles.subContainer}>
-          <div className={styles.listContainer}>
-            <List>
-              {['img', 'may', 'dec'].map((text, index) => (
-                <Link key={text} href={`/threads/${text}`} passHref>
-                  <ListItem button component='a'>
-                    <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                    <ListItemText primary={text} />
-                  </ListItem>
-                </Link>
-              ))}
-            </List>
-          </div>
-        </div>
+        <List>
+          {['img', 'may', 'dec'].map((text, index) => (
+            <Link key={text} href={`/threads/${text}`} passHref>
+              <ListItem button component='a'>
+                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+                <ListItemText primary={text} />
+              </ListItem>
+            </Link>
+          ))}
+        </List>
       </SwipeableDrawer>
     </div>
   )

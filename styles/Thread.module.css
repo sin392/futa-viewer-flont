@@ -15,7 +15,7 @@
 }
 
 .backButton {
-  color: gray;
+  color: var(--accent-color);
   width: 50px !important;
   height: 50px !important;
   cursor: pointer;

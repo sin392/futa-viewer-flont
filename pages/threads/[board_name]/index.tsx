@@ -10,9 +10,10 @@ import React, { useEffect, useRef, useState } from 'react'
 import MenuItem from '@mui/material/MenuItem'
 import FormControl from '@mui/material/FormControl'
 import Select, { SelectChangeEvent } from '@mui/material/Select'
+import { ThreadPreviewSchema } from 'entities/threads/catalog'
 
 interface Props {
-  items: object[]
+  items: ThreadPreviewSchema[]
   error?: {
     status: number
     message: string
@@ -27,13 +28,13 @@ const Catalog: NextPage<Props> = (props: Props) => {
   // TODO: レスポンスの変数名をキャメルケースにしたい
   const { board_name, sort } = router.query
   const { items, error } = props
-  const [filteredItems, setFilteredItems] = useState<object[]>([])
+  const [filteredItems, setFilteredItems] = useState<ThreadPreviewSchema[]>([])
   // const [loading setLoading] = useState<boolean>(false)
   // TODO: コメントまで検索対照に含める
   const searchHandler = () => {
     const keyword = textRef.current.value
     // textRef.current.value = ''
-    const tmpFilteredItems = items.filter((item: any) => {
+    const tmpFilteredItems = items.filter((item) => {
       if (item.title.includes(keyword)) {
         return item
       }
@@ -96,7 +97,7 @@ const Catalog: NextPage<Props> = (props: Props) => {
         {!error ? (
           <>
             <div className={styles.previews}>
-              {filteredItems.map((item: any, index) => {
+              {filteredItems.map((item, index) => {
                 if (item.img) {
                   item.img.src = item.img.src.replace('cat', 'thumb')
                 }

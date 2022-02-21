@@ -7,18 +7,10 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 // import Image from 'next/image'
 import Comment from 'components/comment'
+import { CommentSchema } from 'entities/threads/thread'
 
 interface Props {
-  items: {
-    order: number
-    title: string
-    name: string
-    date: string
-    sod: string
-    body: string
-    no: string
-    img: any
-  }[]
+  items: CommentSchema[]
   error?: {
     status: number
     message: string

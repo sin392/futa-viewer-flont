@@ -10,7 +10,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: lightgray;
+  background-color: var(--accent-color);
   /* z-index: 1; */
   padding: 20px 100px 20px 100px;
 }
@@ -25,7 +25,7 @@
 .select {
   left: calc(50% + 130px);
   position: absolute;
-  background-color: white;
+  background-color: (--base-color);
   overflow: 'hidden';
   border-radius: 4px;
 }
