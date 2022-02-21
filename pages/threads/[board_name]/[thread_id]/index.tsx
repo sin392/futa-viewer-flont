@@ -5,6 +5,7 @@ import styles from 'styles/Thread.module.css'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp'
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown'
+import CircularProgress from '@mui/material/CircularProgress'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 // import Image from 'next/image'
 import Comment from 'components/comment'
@@ -48,18 +49,19 @@ const Thread: NextPage<Props> = ({ board_name, thread_id }) => {
       </div>
 
       <div className={styles.centerContainer}>
-        {!error && items.length ? (
-          <>
-            <div className={styles.topicContainer}>
-              {items[0].img && (
-                <a href={items[0].href} target='_blank' rel='noopener noreferrer'>
-                  <LazyLoadImage
-                    src={items[0].img.src}
-                    className={styles.image}
-                    width={items[0].img.width}
-                    height={items[0].img.height}
-                  />
-                  {/* <div className={styles.image}>
+        {!isLoading ? (
+          !error && items.length ? (
+            <>
+              <div className={styles.topicContainer}>
+                {items[0].img && (
+                  <a href={items[0].href} target='_blank' rel='noopener noreferrer'>
+                    <LazyLoadImage
+                      src={items[0].img.src}
+                      className={styles.image}
+                      width={items[0].img.width}
+                      height={items[0].img.height}
+                    />
+                    {/* <div className={styles.image}>
                     <Image
                       src={items[0].img.src}
                       // layout='fill'
@@ -68,21 +70,26 @@ const Thread: NextPage<Props> = ({ board_name, thread_id }) => {
                       height={items[0].img.height}
                     />
                   </div> */}
-                </a>
-              )}
-              <div className={styles.title}>
-                <Comment {...items[0]} />
+                  </a>
+                )}
+                <div className={styles.title}>
+                  <Comment {...items[0]} />
+                </div>
               </div>
-            </div>
 
-            <div className={styles.commentArea}>
-              {items.slice(1).map((item, index) => {
-                return <Comment {...{ ...item, key: index }} />
-              })}
-            </div>
-          </>
+              <div className={styles.commentArea}>
+                {items.slice(1).map((item, index) => {
+                  return <Comment {...{ ...item, key: index }} />
+                })}
+              </div>
+            </>
+          ) : (
+            <div className={styles.error}>{error?.message}</div>
+          )
         ) : (
-          <div className={styles.error}>{error?.message}</div>
+          <div className={styles.circularContainer}>
+            <CircularProgress />
+          </div>
         )}
       </div>
       <div className={styles.rightContainer}>

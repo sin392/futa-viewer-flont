@@ -8,6 +8,7 @@ import styles from 'styles/Catalog.module.css'
 import React, { useEffect, useRef, useState } from 'react'
 import MenuItem from '@mui/material/MenuItem'
 import FormControl from '@mui/material/FormControl'
+import CircularProgress from '@mui/material/CircularProgress'
 import Select, { SelectChangeEvent } from '@mui/material/Select'
 import { ThreadPreviewSchema } from 'entities/threads/catalog'
 import { swrFetch } from 'utils/utils'
@@ -95,27 +96,33 @@ const Catalog: NextPage<Props> = ({ board_name }) => {
           </Select>
         </FormControl>
       </div>
-      {!error ? (
-        <>
-          <div className={styles.previews}>
-            {filteredItems.map((item, index) => {
-              if (item.img) {
-                item.img.src = item.img.src.replace('cat', 'thumb')
-              }
-              const path = `/threads/${board_name}/${item.id}`
-              return (
-                <Link key={index} href={path}>
-                  <a href={path}>
-                    <ThreadPreview {...item} />
-                  </a>
-                </Link>
-              )
-            })}
-          </div>
-          <BoardDrawer />
-        </>
+      {!isLoading ? (
+        !error ? (
+          <>
+            <div className={styles.previews}>
+              {filteredItems.map((item, index) => {
+                if (item.img) {
+                  item.img.src = item.img.src.replace('cat', 'thumb')
+                }
+                const path = `/threads/${board_name}/${item.id}`
+                return (
+                  <Link key={index} href={path}>
+                    <a href={path}>
+                      <ThreadPreview {...item} />
+                    </a>
+                  </Link>
+                )
+              })}
+            </div>
+            <BoardDrawer />
+          </>
+        ) : (
+          <div className={styles.error}>{error!.message}</div>
+        )
       ) : (
-        <div className={styles.error}>{error!.message}</div>
+        <div className={styles.circularContainer}>
+          <CircularProgress />
+        </div>
       )}
     </div>
   )
