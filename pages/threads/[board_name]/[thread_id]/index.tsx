@@ -1,10 +1,12 @@
 import { useRef, useState, UIEvent } from 'react'
 import type { NextPage, GetServerSideProps } from 'next'
 import { useRouter } from 'next/router'
+import { useSWRConfig } from 'swr'
 import styles from 'styles/Thread.module.css'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp'
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown'
+import AutorenewIcon from '@mui/icons-material/Autorenew';
 import CircularProgress from '@mui/material/CircularProgress'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 // import Image from 'next/image'
@@ -27,9 +29,9 @@ const Thread: NextPage<Props> = ({ board_name, thread_id }) => {
   // HACK: 子に渡すのがrefだけだと再描画がはしらず, stateだけだとscrollToが参照できない
   const [scroll, setScroll] = useState<number>(0)
   const ref = useRef<HTMLDivElement>(null)
-  const { data, error, isLoading } = swrFetch(
-    `http://localhost:15555/v1/threads/${board_name}/${thread_id}`,
-  )
+  const { mutate } = useSWRConfig()
+  const url = `http://localhost:15555/v1/threads/${board_name}/${thread_id}`
+  const { data, error, isLoading } = swrFetch(url)
   const items: CommentSchema[] = data ? (data as any).items : []
 
   const scrollHandler = (e: UIEvent<HTMLDivElement>) => {
@@ -38,6 +40,14 @@ const Thread: NextPage<Props> = ({ board_name, thread_id }) => {
 
   const backHandler = (e: React.MouseEvent) => {
     router.back()
+  }
+
+  const refetchHandler = (e: React.MouseEvent) => {
+    mutate(url)
+    const anchor = ref.current
+    if (anchor != null) {
+      anchor.scrollTo({top:anchor.scrollHeight - anchor.clientHeight, behavior: 'smooth'})
+    }
   }
 
   return (
@@ -94,11 +104,14 @@ const Thread: NextPage<Props> = ({ board_name, thread_id }) => {
       </div>
       <div className={styles.rightContainer}>
         {!error && (
-          <div className={styles.rtbContainer}>
-            <ScrollButton className={styles.rtb} scroll={scroll} anchor={ref.current} type='up'>
+          <div className={styles.controllButtonContainer}>
+            <ScrollButton className={styles.controllButton} scroll={scroll} anchor={ref.current} type='up'>
               <ArrowDropUpIcon className={styles.scrollIcon} />
             </ScrollButton>
-            <ScrollButton className={styles.rtb} scroll={scroll} anchor={ref.current} type='down'>
+            <div className={styles.controllButton}>
+              <AutorenewIcon className={styles.renewIcon} onClick={refetchHandler}/>
+            </div>
+            <ScrollButton className={styles.controllButton} scroll={scroll} anchor={ref.current} type='down'>
               <ArrowDropDownIcon className={styles.scrollIcon} />
             </ScrollButton>
           </div>

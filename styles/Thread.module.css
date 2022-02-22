@@ -49,7 +49,7 @@
   height: 100% !important;
 }
 
-.rtbContainer {
+.controllButtonContainer {
   position: fixed;
   margin-top: 20px;
   /* bottom: 60px; */
@@ -58,18 +58,27 @@
   gap: 10px;
 }
 
-.rtb {
+.controllButton {
   width: 70px;
   height: 70px;
   border-radius: 50%;
   color: var(--base-color);
   background-color: var(--accent-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
   /* user-select: 'none' !important; */
 }
 
 .scrollIcon {
   height: fit-content;
   width: fit-content;
+}
+
+.renewIcon {
+  height: 70%;
+  width: 70%;
 }
 
 .topicContainer {

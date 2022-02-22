@@ -1,4 +1,3 @@
-import { ClassNames } from '@emotion/react'
 import { CommentSchema } from 'entities/threads/thread'
 import { FC } from 'react'
 import styles from 'styles/Comment.module.css'
