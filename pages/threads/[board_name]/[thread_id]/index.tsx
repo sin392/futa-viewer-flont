@@ -14,6 +14,7 @@ import Comment from 'components/comment'
 import { CommentSchema } from 'entities/threads/thread'
 import ScrollButton from 'components/scroll-button'
 import { swrFetch } from 'utils/utils'
+import { IconButton } from '@mui/material'
 
 interface Props {
   board_name: string
@@ -115,9 +116,9 @@ const Thread: NextPage<Props> = ({ board_name, thread_id }) => {
             >
               <ArrowDropUpIcon className={styles.scrollIcon} />
             </ScrollButton>
-            <div className={styles.controllButton}>
+            <IconButton className={styles.controllButton}>
               <AutorenewIcon className={styles.renewIcon} onClick={refetchHandler} />
-            </div>
+            </IconButton>
             <ScrollButton
               className={styles.controllButton}
               scroll={scroll}

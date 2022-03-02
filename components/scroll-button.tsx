@@ -1,4 +1,5 @@
 // from: https://qiita.com/TK-C/items/57f8e2283b46655b98f0
+import { IconButton } from '@mui/material'
 import { FC, useEffect, useState } from 'react'
 
 const LARGE_NUM = 1e5
@@ -43,9 +44,9 @@ const scrollButton: FC<Props> = (props) => {
   const style = isButtonActive ? activeStyle : normalStyle
 
   return (
-    <div style={style as any} onClick={scrollTo} className={className}>
+    <IconButton style={style as any} onClick={scrollTo} className={className}>
       {children}
-    </div>
+    </IconButton>
   )
 }
 
