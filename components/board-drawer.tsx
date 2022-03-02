@@ -25,7 +25,7 @@ const BoardDrawer: FC<Props> = ({ boards }) => {
 
     setOpen(open)
   }
-  console.log(boards)
+
   return (
     <div className={styles.container}>
       <div onClick={toggleDrawer(true)} className={styles.button}></div>
@@ -50,7 +50,7 @@ const BoardDrawer: FC<Props> = ({ boards }) => {
         <List>
           {boards &&
             boards.items.map((item, index) => (
-              <Link key={item.name} href={`/threads/${item.name}`} passHref>
+              <Link key={index} href={`/threads/${item.name}`} passHref>
                 <ListItem button component='a'>
                   <ListItemIcon>
                     <InboxIcon />
