@@ -5,13 +5,17 @@ import ListItem from '@mui/material/ListItem'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
 import InboxIcon from '@mui/icons-material/MoveToInbox'
-import MailIcon from '@mui/icons-material/Mail'
 import SwipeableDrawer from '@mui/material/SwipeableDrawer'
 import styles from 'styles/BoardDrawer.module.css'
+import { MenuSchema } from 'entities/threads/menu'
 
-const drawerWidth = 180
+const drawerWidth = 220
 
-const BoardDrawer: FC = () => {
+interface Props {
+  boards: MenuSchema
+}
+
+const BoardDrawer: FC<Props> = ({ boards }) => {
   const [open, setOpen] = useState(false)
 
   const toggleDrawer = (open: boolean) => (e: any) => {
@@ -21,7 +25,7 @@ const BoardDrawer: FC = () => {
 
     setOpen(open)
   }
-
+  console.log(boards)
   return (
     <div className={styles.container}>
       <div onClick={toggleDrawer(true)} className={styles.button}></div>
@@ -44,14 +48,17 @@ const BoardDrawer: FC = () => {
         onOpen={toggleDrawer(true)}
       >
         <List>
-          {['img', 'may', 'dec'].map((text, index) => (
-            <Link key={text} href={`/threads/${text}`} passHref>
-              <ListItem button component='a'>
-                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItem>
-            </Link>
-          ))}
+          {boards &&
+            boards.items.map((item, index) => (
+              <Link key={item.name} href={`/threads/${item.name}`} passHref>
+                <ListItem button component='a'>
+                  <ListItemIcon>
+                    <InboxIcon />
+                  </ListItemIcon>
+                  <ListItemText primary={item.name} />
+                </ListItem>
+              </Link>
+            ))}
         </List>
       </SwipeableDrawer>
     </div>

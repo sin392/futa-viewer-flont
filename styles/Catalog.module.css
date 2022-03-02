@@ -44,7 +44,7 @@
   grid-template-columns: repeat(auto-fit, 200px);
   justify-content: center;
   grid-gap: 1rem;
-  padding: 20px 0;
+  padding: 20px 100px;
 }
 
 .error {

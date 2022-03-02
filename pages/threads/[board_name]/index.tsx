@@ -15,14 +15,16 @@ import Select, { SelectChangeEvent } from '@mui/material/Select'
 import { ThreadPreviewSchema } from 'entities/threads/catalog'
 import { swrFetch } from 'utils/utils'
 import { useSWRConfig } from 'swr'
+import { MenuSchema } from 'entities/threads/menu'
 
 interface Props {
   board_name: string
+  boards: MenuSchema
   // sort: string
 }
 
 // TODO: replace any
-const Catalog: NextPage<Props> = ({ board_name }) => {
+const Catalog: NextPage<Props> = ({ board_name, boards }) => {
   // ref: https://qiita.com/FumioNonaka/items/feb2fd5b362f2558acfa
   const { mutate } = useSWRConfig()
   const textRef = useRef<HTMLInputElement>(null!)
@@ -124,7 +126,7 @@ const Catalog: NextPage<Props> = ({ board_name }) => {
                 )
               })}
             </div>
-            <BoardDrawer />
+            <BoardDrawer boards={boards} />
           </>
         ) : (
           <div className={styles.error}>{error!.message}</div>
@@ -143,8 +145,9 @@ const Catalog: NextPage<Props> = ({ board_name }) => {
 export const getServerSideProps: GetServerSideProps = async (ctx: any) => {
   const board_name = ctx.params.board_name
   // const sort = ctx.query.sort != null ? ctx.query.sort : '0'
+  const boards = await (await fetch(`http://localhost:15555/v1/boards`)).json()
   return {
-    props: { board_name },
+    props: { board_name, boards },
   }
 }
 

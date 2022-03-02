@@ -1,7 +1,7 @@
 :root {
   --base-color: white;
   --main-color: #464646;
-  --accent-color: lightgray;
+  --accent-color: rgba(200, 200, 200);
 }
 
 html,

@@ -116,8 +116,8 @@ const Thread: NextPage<Props> = ({ board_name, thread_id }) => {
             >
               <ArrowDropUpIcon className={styles.scrollIcon} />
             </ScrollButton>
-            <IconButton className={styles.controllButton}>
-              <AutorenewIcon className={styles.renewIcon} onClick={refetchHandler} />
+            <IconButton className={styles.controllButton} onClick={refetchHandler}>
+              <AutorenewIcon className={styles.renewIcon} />
             </IconButton>
             <ScrollButton
               className={styles.controllButton}
