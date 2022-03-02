@@ -8,10 +8,13 @@ import styles from 'styles/Catalog.module.css'
 import React, { useEffect, useRef, useState } from 'react'
 import MenuItem from '@mui/material/MenuItem'
 import FormControl from '@mui/material/FormControl'
+import IconButton from '@mui/material/IconButton'
 import CircularProgress from '@mui/material/CircularProgress'
+import AutorenewIcon from '@mui/icons-material/Autorenew'
 import Select, { SelectChangeEvent } from '@mui/material/Select'
 import { ThreadPreviewSchema } from 'entities/threads/catalog'
 import { swrFetch } from 'utils/utils'
+import { useSWRConfig } from 'swr'
 
 interface Props {
   board_name: string
@@ -21,6 +24,7 @@ interface Props {
 // TODO: replace any
 const Catalog: NextPage<Props> = ({ board_name }) => {
   // ref: https://qiita.com/FumioNonaka/items/feb2fd5b362f2558acfa
+  const { mutate } = useSWRConfig()
   const textRef = useRef<HTMLInputElement>(null!)
   const router = useRouter()
   // TODO: レスポンスの変数名をキャメルケースにしたい
@@ -28,9 +32,8 @@ const Catalog: NextPage<Props> = ({ board_name }) => {
   const sort = router.query.sort
 
   // const { items, error } = props
-  const { data, error, isLoading } = swrFetch(
-    `http://localhost:15555/v1/threads/${board_name}?sort=${sort}`,
-  )
+  const url = `http://localhost:15555/v1/threads/${board_name}?sort=${sort}`
+  const { data, error, isLoading } = swrFetch(url)
   const items: ThreadPreviewSchema[] = data ? (data as any).items : []
   const [filteredItems, setFilteredItems] = useState<ThreadPreviewSchema[]>([])
   // const [loading setLoading] = useState<boolean>(false)
@@ -53,6 +56,10 @@ const Catalog: NextPage<Props> = ({ board_name }) => {
       pathname: router.pathname,
       query: { ...router.query, sort: e.target.value },
     })
+  }
+
+  const refetchHandler = (e: React.MouseEvent) => {
+    mutate(url)
   }
 
   useEffect(() => {
@@ -95,6 +102,9 @@ const Catalog: NextPage<Props> = ({ board_name }) => {
             <MenuItem value='8'>そ順</MenuItem>
           </Select>
         </FormControl>
+        <IconButton onClick={refetchHandler} className={styles.renewButton}>
+          <AutorenewIcon className={styles.renewIcon} />
+        </IconButton>
       </div>
       {!isLoading ? (
         !error ? (

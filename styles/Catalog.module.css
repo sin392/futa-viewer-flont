@@ -63,3 +63,14 @@
   align-items: center;
   justify-content: center;
 }
+
+.renewButton {
+  /* border: 1px solid; */
+  width: 60px;
+  height: 60px;
+}
+
+.renewIcon {
+  height: 100%;
+  width: 100%;
+}
